@@ -1,0 +1,19 @@
+import requests
+from bs4 import BeautifulSoup
+
+# The target URL
+url = 'http://quotes.toscrape.com/'
+
+# Download the webpage
+response = requests.get(url)
+
+# Parse the raw HTML into a searchable object
+soup = BeautifulSoup(response.text, 'html.parser')
+
+# Find all HTML elements that contain the quotes
+quotes = soup.find_all('span', class_='text')
+authors = soup.find_all('small', class_='author')
+
+# Loop through and print the extracted text
+for quote, author in zip(quotes, authors):
+    print(f'"{quote.text}" - {author.text}')
